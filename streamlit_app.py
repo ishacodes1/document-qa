@@ -55,10 +55,25 @@ st.markdown("""
             color: #005EB8;
         }
 
+        .stMarkdown h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .stMarkdown h3 {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #666666;
+        }
+
         .stMarkdown p {
             font-size: 16px;
             line-height: 1.6;
             color: #666666;
+            text-align: center;
+            margin-bottom: 40px;
         }
 
         .icon-container {
@@ -107,17 +122,14 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Try to load icons or handle the error gracefully
-try:
-    management_icon = Image.open("management_icon.png")
-    ingestion_icon = Image.open("ingestion_icon.png")
-except FileNotFoundError:
-    management_icon = None
-    ingestion_icon = None
-
-# AIDELINE Header with modern styling moved to the left
-st.markdown("<h1 style='text-align: left;'>AIDELINE - AI-Powered BDR Assistant</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: left;'>Manage Your BDR Tasks with AI-Powered Agents</h3>", unsafe_allow_html=True)
+# AIDELINE Header and Introduction with modern styling
+st.markdown("<h1>AIDELINE</h1>", unsafe_allow_html=True)
+st.markdown("<h3>Your AI-Powered Business Development Representative</h3>", unsafe_allow_html=True)
+st.markdown("""
+    <p>Welcome to AIDELINE, where cutting-edge AI technology meets the art of business development. Our AI-powered BDR assistant
+    is designed to streamline your sales process, from lead research to personalized outreach. Enhance your team's productivity and
+    watch your conversions soar with AIDELINE's intelligent tools.</p>
+    """, unsafe_allow_html=True)
 
 # OpenAI API Key input with styled input
 st.markdown("### Enter your OpenAI API Key to Get Started:")
@@ -129,15 +141,13 @@ else:
     openai.api_key = openai_api_key
 
     # Management Agent Section
-    if management_icon:
-        st.markdown("<div class='icon-container'><img src='management_icon.png' alt='Management Icon'><h3>Management Agent</h3></div>", unsafe_allow_html=True)
+    st.markdown("### Management Agent")
     st.write("The Management Agent orchestrates tasks between different agents.")
     if st.button("Trigger Management Agent"):
         st.success("Management Agent triggered successfully!")
 
     # Data Ingestion Agent Section
-    if ingestion_icon:
-        st.markdown("<div class='icon-container'><img src='ingestion_icon.png' alt='Ingestion Icon'><h3>Data Ingestion Agent</h3></div>", unsafe_allow_html=True)
+    st.markdown("### Data Ingestion Agent")
     st.write("The Data Ingestion Agent collects, cleans, and stores data from various sources.")
     if st.button("Trigger Data Ingestion"):
         st.write("Data Ingestion Agent triggered!")
