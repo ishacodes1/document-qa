@@ -131,6 +131,26 @@ st.markdown("""
     watch your conversions soar with AIDELINE's intelligent tools.</p>
     """, unsafe_allow_html=True)
 
+# Add a visual guide to the user journey
+st.markdown("<h2 style='text-align: center;'>User Journey</h2>", unsafe_allow_html=True)
+st.image("path_to_your_image/user_journey.png", use_column_width=True)  # Replace with actual path to your image
+
+# Optional: Textual representation of steps
+st.markdown("""
+    <h3 style='text-align: center;'>Start</h3>
+    <p style='text-align: center;'>User messages the name of target company or person to AIDELINE.</p>
+    <p style='text-align: center;'>AIDELINE collects data for profiling.</p>
+    
+    <h3 style='text-align: center;'>Analyze</h3>
+    <p style='text-align: center;'>AIDELINE creates the profile and provides insights.</p>
+    
+    <h3 style='text-align: center;'>Reach Out</h3>
+    <p style='text-align: center;'>The user gets recommendations and starts interaction with the prospect.</p>
+    
+    <h3 style='text-align: center;'>Optimize</h3>
+    <p style='text-align: center;'>AIDELINE helps to optimize the follow-up and provides LOI scores.</p>
+""", unsafe_allow_html=True)
+
 # OpenAI API Key input with styled input
 st.markdown("### Enter your OpenAI API Key to Get Started:")
 openai_api_key = st.text_input("🔑 OpenAI API Key", type="password")
@@ -188,9 +208,4 @@ else:
             st.session_state["messages"].append({"role": "assistant", "content": answer})
 
             # Display the updated chat
-            st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {answer}</div>", unsafe_allow_html=True)
-
-# Footer Section with styled text
-st.markdown("<hr>", unsafe_allow_html=True)
-st.markdown("<div class='footer'>© 2024 Echomotion GmbH - All Rights Reserved</div>", unsafe_allow_html=True)
-st.markdown("<div class='footer'>For more information, visit our <a href='https://yourwebsite.com' style='color: #005EB8;'>website</a> or contact us at info@echomotion.de</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='
