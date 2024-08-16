@@ -156,7 +156,7 @@ else:
 
     # Chat Interface Section
     st.markdown("<h2 style='text-align: left;'>Chat with AIDELINE</h2>", unsafe_allow_html=True)
-    st.write("Interact with AIDELINE and ask questions. The context will be preserved throughout the conversation.")
+    st.write("Engage in a conversation with AIDELINE, your AI-powered assistant. You can ask questions, provide prompts, and receive intelligent responses. AIDELINE remembers the context of your previous conversations, allowing for a seamless and continuous dialogue as you interact.")
 
     # Initialize or retrieve chat history
     if "messages" not in st.session_state:
