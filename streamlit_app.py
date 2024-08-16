@@ -5,6 +5,20 @@ from PIL import Image
 # Set up the AIDELINE page configuration with a modern UI theme
 st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
 
+# Initialize OpenAI API key
+openai.api_key = "your_openai_api_key_here"
+
+# Example usage of the updated API
+response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Who won the world series in 2020?"},
+    ]
+)
+
+st.write(response['choices'][0]['message']['content'])
+
 # Custom CSS for light theme, modern fonts, and corporate styling
 st.markdown("""
     <style>
