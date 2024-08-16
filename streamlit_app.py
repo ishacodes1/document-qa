@@ -5,22 +5,22 @@ from PIL import Image
 # Set up the AIDELINE page configuration with a modern UI theme
 st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
 
-# Custom CSS for modern fonts, colors, and layout styling
+# Custom CSS for dark theme and modern UI styling
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #F4F7F8;
-            color: #333333;
+            background-color: #1E1E1E;
+            color: #E0E0E0;
         }
 
         .stApp {
-            background-color: #FFFFFF;
+            background-color: #2B2B2B;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .stButton > button {
@@ -41,10 +41,11 @@ st.markdown("""
         .stTextArea textarea, .stTextInput input {
             font-family: 'Roboto', sans-serif;
             font-size: 14px;
-            color: #333333;
+            color: #E0E0E0;
+            background-color: #333333;
             border-radius: 8px;
             padding: 12px;
-            border: 1px solid #CCCCCC;
+            border: 1px solid #4D4D4D;
         }
 
         .stMarkdown h1, h2, h3, h4 {
@@ -55,7 +56,7 @@ st.markdown("""
         .stMarkdown p {
             font-size: 16px;
             line-height: 1.6;
-            color: #555555;
+            color: #CCCCCC;
         }
 
         .icon-container {
@@ -77,13 +78,15 @@ st.markdown("""
         }
 
         .agent-response {
-            background-color: #E8F0FE;
+            background-color: #333333;
             padding: 15px;
             border-radius: 8px;
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
-            color: #333333;
+            color: #E0E0E0;
             line-height: 1.6;
+            margin-bottom: 10px;
+            border-left: 4px solid #007ACC;
         }
 
         .footer {
@@ -94,7 +97,7 @@ st.markdown("""
         }
 
         hr {
-            border-top: 1px solid #CCCCCC;
+            border-top: 1px solid #444444;
             margin-top: 30px;
             margin-bottom: 30px;
         }
@@ -103,14 +106,10 @@ st.markdown("""
 
 # Try to load icons or handle the error gracefully
 try:
-    email_icon = Image.open("email_icon.png")  # replace with your actual icon path
     management_icon = Image.open("management_icon.png")
-    crm_icon = Image.open("crm_icon.png")
     ingestion_icon = Image.open("ingestion_icon.png")
 except FileNotFoundError:
-    email_icon = None
     management_icon = None
-    crm_icon = None
     ingestion_icon = None
 
 # AIDELINE Header with modern styling
@@ -133,26 +132,6 @@ else:
     if st.button("Trigger Management Agent"):
         st.success("Management Agent triggered successfully!")
 
-    # Email Agent Section
-    if email_icon:
-        st.markdown("<div class='icon-container'><img src='email_icon.png' alt='Email Icon'><h3>Email Agent</h3></div>", unsafe_allow_html=True)
-    st.write("The Email Agent retrieves information and processes email-related prompts.")
-    email_prompt = st.text_area("📧 Enter the email prompt or message you want the agent to process:")
-    if st.button("Run Email Agent"):
-        if email_prompt:
-            st.write(f"Processing email prompt: {email_prompt}")
-            # Simulate email agent action
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "user", "content": email_prompt}
-                ]
-            )
-            answer = response['choices'][0]['message']['content']
-            st.markdown(f"<div class='agent-response'><strong>Agent Response:</strong> {answer}</div>", unsafe_allow_html=True)
-        else:
-            st.warning("Please enter a prompt for the Email Agent to process.")
-
     # Data Ingestion Agent Section
     if ingestion_icon:
         st.markdown("<div class='icon-container'><img src='ingestion_icon.png' alt='Ingestion Icon'><h3>Data Ingestion Agent</h3></div>", unsafe_allow_html=True)
@@ -164,47 +143,42 @@ else:
         st.write("Storing data...")
         st.success("Data has been successfully ingested and stored.")
 
-    # New Section: Lead Qualification and Action Triggering
-    if crm_icon:
-        st.markdown("<div class='icon-container'><img src='crm_icon.png' alt='CRM Icon'><h3>Lead Qualification</h3></div>", unsafe_allow_html=True)
-    st.write("Review and qualify leads. Once satisfied, you can trigger actions like sending emails or connecting to a CRM.")
+    # Chat Interface Section
+    st.markdown("## Chat with AIDELINE")
+    st.write("Interact with AIDELINE and ask questions. The context will be preserved throughout the conversation.")
 
-    # Input for qualifying leads
-    lead_qualification_prompt = st.text_area("🔍 Enter details or criteria to qualify leads:")
-    if st.button("Review and Qualify Leads"):
-        if lead_qualification_prompt:
-            st.write(f"Qualifying leads based on: {lead_qualification_prompt}")
-            # Simulate lead qualification
-            qualified_leads = ["Lead 1: High Potential", "Lead 2: Medium Potential", "Lead 3: Low Potential"]
-            st.markdown(f"<div class='agent-response'><strong>Qualified Leads:</strong><br>{'<br>'.join(qualified_leads)}</div>", unsafe_allow_html=True)
+    # Initialize or retrieve chat history
+    if "messages" not in st.session_state:
+        st.session_state["messages"] = []
+
+    # Display previous chat messages
+    for message in st.session_state["messages"]:
+        if message["role"] == "user":
+            st.markdown(f"<div class='agent-response'><strong>You:</strong> {message['content']}</div>", unsafe_allow_html=True)
         else:
-            st.warning("Please enter lead qualification criteria.")
+            st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {message['content']}</div>", unsafe_allow_html=True)
 
-    # Trigger Email and CRM Actions
-    st.markdown("### Trigger Actions for Qualified Leads")
-    col1, col2 = st.columns(2)
+    # Input for new message
+    user_input = st.text_input("💬 Your message:")
+    if st.button("Send"):
+        if user_input:
+            # Add user message to chat history
+            st.session_state["messages"].append({"role": "user", "content": user_input})
 
-    with col1:
-        if st.button("📧 Send Email via Outlook"):
-            st.write("Connecting to Outlook...")
-            st.success("Emails sent successfully!")
+            # Generate AIDELINE's response using OpenAI API
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=st.session_state["messages"]
+            )
+            answer = response['choices'][0]['message']['content']
 
-    with col2:
-        if st.button("🔗 Connect to CRM (HubSpot)"):
-            st.write("Connecting to HubSpot...")
-            st.success("Data ingested into CRM successfully!")
+            # Add AIDELINE's response to chat history
+            st.session_state["messages"].append({"role": "assistant", "content": answer})
 
-    # Data Storage Visualization
-    st.markdown("## Data Storage")
-    st.write("Visualize the stored data (simulated).")
-    stored_data = [
-        {"Data Point": "Company Name", "Value": "Echomotion GmbH"},
-        {"Data Point": "Contact Email", "Value": "info@echomotion.de"},
-        {"Data Point": "Recent Activity", "Value": "Downloaded whitepaper"},
-    ]
-    st.table(stored_data)
+            # Display the updated chat
+            st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {answer}</div>", unsafe_allow_html=True)
 
 # Footer Section with styled text
 st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown("<div class='footer'>© 2024 Echomotion GmbH - All Rights Reserved</div>", unsafe_allow_html=True)
-st.markdown("<div class='footer'>For more information, visit our <a href='https://yourwebsite.com'>website</a> or contact us at info@echomotion.de</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>For more information, visit our <a href='https://yourwebsite.com' style='color: #007ACC;'>website</a> or contact us at info@echomotion.de</div>", unsafe_allow_html=True)
