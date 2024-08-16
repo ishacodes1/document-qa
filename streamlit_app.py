@@ -133,8 +133,16 @@ st.markdown("""
 
 # Add a visual guide to the user journey
 st.markdown("<h2 style='text-align: center;'>User Journey</h2>", unsafe_allow_html=True)
-st.image("path_to_your_image/user_journey.png", use_column_width=True)  # Replace with actual path to your image
 
+image_path = "path_to_your_image/user_journey.png"  # Replace with the correct path to your image
+
+try:
+    image = Image.open(image_path)
+    st.image(image, use_column_width=True)
+except Exception as e:
+    st.error(f"Error loading image: {e}")
+    st.markdown("<p style='text-align: center; color: red;'>Image not found or cannot be loaded. Please check the file path.</p>", unsafe_allow_html=True)
+    
 # Optional: Textual representation of steps
 st.markdown("""
     <h3 style='text-align: center;'>Start</h3>
