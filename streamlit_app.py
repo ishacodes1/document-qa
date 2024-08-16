@@ -101,11 +101,17 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Load icons
-email_icon = Image.open("email_icon.png")  # replace with your actual icon path
-management_icon = Image.open("management_icon.png")
-crm_icon = Image.open("crm_icon.png")
-ingestion_icon = Image.open("ingestion_icon.png")
+# Try to load icons or handle the error gracefully
+try:
+    email_icon = Image.open("email_icon.png")  # replace with your actual icon path
+    management_icon = Image.open("management_icon.png")
+    crm_icon = Image.open("crm_icon.png")
+    ingestion_icon = Image.open("ingestion_icon.png")
+except FileNotFoundError:
+    email_icon = None
+    management_icon = None
+    crm_icon = None
+    ingestion_icon = None
 
 # AIDELINE Header with modern styling
 st.markdown("<h1 style='text-align: center;'>AIDELINE - AI-Powered BDR Assistant</h1>", unsafe_allow_html=True)
@@ -121,13 +127,15 @@ else:
     openai.api_key = openai_api_key
 
     # Management Agent Section
-    st.markdown("<div class='icon-container'><img src='management_icon.png' alt='Management Icon'><h3>Management Agent</h3></div>", unsafe_allow_html=True)
+    if management_icon:
+        st.markdown("<div class='icon-container'><img src='management_icon.png' alt='Management Icon'><h3>Management Agent</h3></div>", unsafe_allow_html=True)
     st.write("The Management Agent orchestrates tasks between different agents.")
     if st.button("Trigger Management Agent"):
         st.success("Management Agent triggered successfully!")
 
     # Email Agent Section
-    st.markdown("<div class='icon-container'><img src='email_icon.png' alt='Email Icon'><h3>Email Agent</h3></div>", unsafe_allow_html=True)
+    if email_icon:
+        st.markdown("<div class='icon-container'><img src='email_icon.png' alt='Email Icon'><h3>Email Agent</h3></div>", unsafe_allow_html=True)
     st.write("The Email Agent retrieves information and processes email-related prompts.")
     email_prompt = st.text_area("📧 Enter the email prompt or message you want the agent to process:")
     if st.button("Run Email Agent"):
@@ -146,7 +154,8 @@ else:
             st.warning("Please enter a prompt for the Email Agent to process.")
 
     # Data Ingestion Agent Section
-    st.markdown("<div class='icon-container'><img src='ingestion_icon.png' alt='Ingestion Icon'><h3>Data Ingestion Agent</h3></div>", unsafe_allow_html=True)
+    if ingestion_icon:
+        st.markdown("<div class='icon-container'><img src='ingestion_icon.png' alt='Ingestion Icon'><h3>Data Ingestion Agent</h3></div>", unsafe_allow_html=True)
     st.write("The Data Ingestion Agent collects, cleans, and stores data from various sources.")
     if st.button("Trigger Data Ingestion"):
         st.write("Data Ingestion Agent triggered!")
@@ -156,7 +165,8 @@ else:
         st.success("Data has been successfully ingested and stored.")
 
     # New Section: Lead Qualification and Action Triggering
-    st.markdown("<div class='icon-container'><img src='crm_icon.png' alt='CRM Icon'><h3>Lead Qualification</h3></div>", unsafe_allow_html=True)
+    if crm_icon:
+        st.markdown("<div class='icon-container'><img src='crm_icon.png' alt='CRM Icon'><h3>Lead Qualification</h3></div>", unsafe_allow_html=True)
     st.write("Review and qualify leads. Once satisfied, you can trigger actions like sending emails or connecting to a CRM.")
 
     # Input for qualifying leads
