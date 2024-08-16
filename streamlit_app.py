@@ -176,15 +176,22 @@ else:
             # Add user message to chat history
             st.session_state["messages"].append({"role": "user", "content": user_input})
 
-            # Generate AIDELINE's response using OpenAI API with the updated API structure
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=st.session_state["messages"]
-            )
-            answer = response['choices'][0]['message']['content']
+            try:
+                # Generate AIDELINE's response using OpenAI API with the updated API structure
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=st.session_state["messages"]
+                )
+                answer = response['choices'][0]['message']['content']
 
-            # Add AIDELINE's response to chat history
-            st.session_state["messages"].append({"role": "assistant", "content": answer})
+                # Add AIDELINE's response to chat history
+                st.session_state["messages"].append({"role": "assistant", "content": answer})
 
-            # Display the updated chat
-            st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {answer}</div>", unsafe_allow_html=True)
+                # Display the updated chat
+                st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {answer}</div>", unsafe_allow_html=True)
+
+            except openai.error.OpenAIError as e:
+                st.error(f"An error occurred: {e}")
+
+# Footer
+st.markdown("<div class='footer'>Powered by OpenAI and Streamlit</div>", unsafe_allow_html=True)
