@@ -55,33 +55,4 @@ else:
     # Display previous chat messages
     for message in st.session_state["messages"]:
         if message["role"] == "user":
-            st.markdown(f"<div class='agent-response'><strong>You:</strong> {message['content']}</div>", unsafe_allow_html=True)
-        else:
-            st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {message['content']}</div>", unsafe_allow_html=True)
-
-    # Input for new message
-    user_input = st.text_input("💬 Your message:")
-    if st.button("Send"):
-        if user_input:
-            # Add user message to chat history
-            st.session_state["messages"].append({"role": "user", "content": user_input})
-
-            try:
-                # Generate AIDELINE's response using OpenAI API with the updated API structure
-                response = openai.Chat.create(
-                    model="gpt-3.5-turbo",
-                    messages=st.session_state["messages"]
-                )
-                answer = response['choices'][0]['message']['content']
-
-                # Add AIDELINE's response to chat history
-                st.session_state["messages"].append({"role": "assistant", "content": answer})
-
-                # Display the updated chat
-                st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {answer}</div>", unsafe_allow_html=True)
-
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
-
-# Footer
-st.markdown("<div class='footer'>Powered by OpenAI and Streamlit</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='agent-response'><strong>You:</​⬤
