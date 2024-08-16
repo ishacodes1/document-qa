@@ -140,15 +140,14 @@ else:
     # Set OpenAI API key
     openai.api_key = openai_api_key
 
-    # Management Agent Section
-    st.markdown("### Management Agent")
-    st.write("The Management Agent orchestrates tasks between different agents.")
+    # Left-aligned sections starting from "Management Agent"
+    st.markdown("<h2 style='text-align: left;'>Management Agent</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: left;'>The Management Agent orchestrates tasks between different agents.</p>", unsafe_allow_html=True)
     if st.button("Trigger Management Agent"):
         st.success("Management Agent triggered successfully!")
 
-    # Data Ingestion Agent Section
-    st.markdown("### Data Ingestion Agent")
-    st.write("The Data Ingestion Agent collects, cleans, and stores data from various sources.")
+    st.markdown("<h2 style='text-align: left;'>Data Ingestion Agent</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: left;'>The Data Ingestion Agent collects, cleans, and stores data from various sources.</p>", unsafe_allow_html=True)
     if st.button("Trigger Data Ingestion"):
         st.write("Data Ingestion Agent triggered!")
         st.write("Collecting data...")
@@ -157,7 +156,7 @@ else:
         st.success("Data has been successfully ingested and stored.")
 
     # Chat Interface Section
-    st.markdown("## Chat with AIDELINE")
+    st.markdown("<h2 style='text-align: left;'>Chat with AIDELINE</h2>", unsafe_allow_html=True)
     st.write("Interact with AIDELINE and ask questions. The context will be preserved throughout the conversation.")
 
     # Initialize or retrieve chat history
