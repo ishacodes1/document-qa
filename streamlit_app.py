@@ -115,9 +115,9 @@ except FileNotFoundError:
     management_icon = None
     ingestion_icon = None
 
-# AIDELINE Header with modern styling
-st.markdown("<h1 style='text-align: center;'>AIDELINE - AI-Powered BDR Assistant</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>Manage Your BDR Tasks with AI-Powered Agents</h3>", unsafe_allow_html=True)
+# AIDELINE Header with modern styling moved to the left
+st.markdown("<h1 style='text-align: left;'>AIDELINE - AI-Powered BDR Assistant</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: left;'>Manage Your BDR Tasks with AI-Powered Agents</h3>", unsafe_allow_html=True)
 
 # OpenAI API Key input with styled input
 st.markdown("### Enter your OpenAI API Key to Get Started:")
@@ -168,7 +168,7 @@ else:
             # Add user message to chat history
             st.session_state["messages"].append({"role": "user", "content": user_input})
 
-            # Generate AIDELINE's response using OpenAI API
+            # Generate AIDELINE's response using OpenAI API with the new API structure
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=st.session_state["messages"]
