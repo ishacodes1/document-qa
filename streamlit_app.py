@@ -5,88 +5,91 @@ from PIL import Image
 # Set up the AIDELINE page configuration with a modern UI theme
 st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
 
-# Custom CSS for dark theme and modern UI styling
+# Custom CSS for light theme, modern fonts, and corporate styling
 st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #1E1E1E;
-            color: #E0E0E0;
+            font-family: 'Inter', sans-serif;
+            background-color: #F4F7F8;
+            color: #333333;
         }
 
         .stApp {
-            background-color: #2B2B2B;
+            background-color: #FFFFFF;
             border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .stButton > button {
-            background-color: #007ACC;
+            background-color: #005EB8;
             color: white;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
             cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 94, 184, 0.2);
         }
 
         .stButton > button:hover {
-            background-color: #005F9E;
+            background-color: #004494;
             color: white;
         }
 
         .stTextArea textarea, .stTextInput input {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 14px;
-            color: #E0E0E0;
-            background-color: #333333;
+            color: #333333;
+            background-color: #FFFFFF;
             border-radius: 8px;
             padding: 12px;
-            border: 1px solid #4D4D4D;
+            border: 1px solid #CCCCCC;
+            box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .stMarkdown h1, h2, h3, h4 {
-            font-weight: 500;
-            color: #007ACC;
+            font-weight: 600;
+            color: #005EB8;
         }
 
         .stMarkdown p {
             font-size: 16px;
             line-height: 1.6;
-            color: #CCCCCC;
+            color: #666666;
         }
 
         .icon-container {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .icon-container img {
             width: 40px;
             height: 40px;
-            margin-right: 10px;
+            margin-right: 15px;
         }
 
         .icon-container h3 {
             margin: 0;
-            font-weight: 500;
-            color: #007ACC;
+            font-weight: 600;
+            color: #005EB8;
         }
 
         .agent-response {
-            background-color: #333333;
+            background-color: #F1F5FB;
             padding: 15px;
             border-radius: 8px;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 16px;
-            color: #E0E0E0;
+            color: #333333;
             line-height: 1.6;
             margin-bottom: 10px;
-            border-left: 4px solid #007ACC;
+            border-left: 4px solid #005EB8;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .footer {
@@ -97,7 +100,7 @@ st.markdown("""
         }
 
         hr {
-            border-top: 1px solid #444444;
+            border-top: 1px solid #E0E0E0;
             margin-top: 30px;
             margin-bottom: 30px;
         }
@@ -181,4 +184,4 @@ else:
 # Footer Section with styled text
 st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown("<div class='footer'>© 2024 Echomotion GmbH - All Rights Reserved</div>", unsafe_allow_html=True)
-st.markdown("<div class='footer'>For more information, visit our <a href='https://yourwebsite.com' style='color: #007ACC;'>website</a> or contact us at info@echomotion.de</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>For more information, visit our <a href='https://yourwebsite.com' style='color: #005EB8;'>website</a> or contact us at info@echomotion.de</div>", unsafe_allow_html=True)
