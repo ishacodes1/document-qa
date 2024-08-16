@@ -1,5 +1,6 @@
+import os
 import streamlit as st
-import openai
+from openai import OpenAI
 
 # Set up the AIDELINE page configuration with a modern UI theme
 st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
@@ -23,11 +24,12 @@ st.markdown("""
 # OpenAI API Key input with styled input
 st.markdown("### Enter your OpenAI API Key to Get Started:")
 openai_api_key = st.text_input("🔑 OpenAI API Key", type="password")
+
 if not openai_api_key:
     st.info("Please enter your OpenAI API key to continue.", icon="🔑")
 else:
-    # Set OpenAI API key
-    openai.api_key = openai_api_key
+    # Instantiate the OpenAI client
+    client = OpenAI(api_key=openai_api_key)
 
     # Left-aligned sections starting from "Management Agent"
     st.markdown("<h2 style='text-align: left;'>Management Agent</h2>", unsafe_allow_html=True)
@@ -68,11 +70,11 @@ else:
 
             try:
                 # Generate AIDELINE's response using OpenAI API with the updated API structure
-                response = openai.ChatCompletion.create(
+                response = client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=st.session_state["messages"]
                 )
-                answer = response['choices'][0]['message']['content']
+                answer = response.choices[0].message.content
 
                 # Add AIDELINE's response to chat history
                 st.session_state["messages"].append({"role": "assistant", "content": answer})
