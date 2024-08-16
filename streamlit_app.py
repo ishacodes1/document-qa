@@ -1,14 +1,92 @@
 import streamlit as st
 import openai
 
-# Set up the AIDELINE page configuration
-st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
+# Set up the AIDELINE page configuration with a modern UI theme
+st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="centered", page_icon="🤖")
 
-# AIDELINE Header
-st.markdown("<h1 style='text-align: center; color: #4B8BBE;'>AIDELINE - AI-Powered BDR Assistant</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #4B8BBE;'>Manage Your BDR Tasks with AI-Powered Agents</h3>", unsafe_allow_html=True)
+# Custom CSS for modern fonts and clean layout
+st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F4F7F8;
+            color: #333333;
+        }
 
-# OpenAI API Key input
+        .stButton > button {
+            background-color: #007ACC;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+
+        .stButton > button:hover {
+            background-color: #005F9E;
+            color: white;
+        }
+
+        .stTextArea textarea {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #333333;
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #CCCCCC;
+        }
+
+        .stTextInput input {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #333333;
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #CCCCCC;
+        }
+
+        .stMarkdown h1, h2, h3, h4 {
+            font-weight: 500;
+            color: #007ACC;
+        }
+
+        .stMarkdown p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555555;
+        }
+
+        .agent-response {
+            background-color: #E8F0FE;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777777;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        hr {
+            border-top: 1px solid #CCCCCC;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+# AIDELINE Header with modern styling
+st.markdown("<h1 style='text-align: center;'>AIDELINE - AI-Powered BDR Assistant</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>Manage Your BDR Tasks with AI-Powered Agents</h3>", unsafe_allow_html=True)
+
+# OpenAI API Key input with styled input
 st.markdown("### Enter your OpenAI API Key to Get Started:")
 openai_api_key = st.text_input("OpenAI API Key", type="password")
 if not openai_api_key:
@@ -17,13 +95,13 @@ else:
     # Set OpenAI API key
     openai.api_key = openai_api_key
 
-    # Management Agent - Overseeing the operation
+    # Management Agent Section
     st.markdown("## Management Agent")
     st.write("The Management Agent orchestrates tasks between different agents.")
     if st.button("Trigger Management Agent"):
-        st.write("Management Agent triggered!")
+        st.success("Management Agent triggered successfully!")
 
-    # Email Agent - Retrieve information and process prompts
+    # Email Agent Section
     st.markdown("## Email Agent")
     st.write("The Email Agent retrieves information and processes email-related prompts.")
     email_prompt = st.text_area("Enter the email prompt or message you want the agent to process:")
@@ -38,22 +116,21 @@ else:
                 ]
             )
             answer = response['choices'][0]['message']['content']
-            st.markdown(f"**Agent Response:** {answer}")
+            st.markdown(f"<div class='agent-response'><strong>Agent Response:</strong> {answer}</div>", unsafe_allow_html=True)
         else:
             st.warning("Please enter a prompt for the Email Agent to process.")
 
-    # Data Ingestion Agent - Trigger data collection, cleaning, and storage
+    # Data Ingestion Agent Section
     st.markdown("## Data Ingestion Agent")
     st.write("The Data Ingestion Agent collects, cleans, and stores data from various sources.")
     if st.button("Trigger Data Ingestion"):
         st.write("Data Ingestion Agent triggered!")
-        # Simulate data ingestion actions
         st.write("Collecting data...")
         st.write("Cleaning data (removing HTML tags, etc.)...")
         st.write("Storing data...")
         st.success("Data has been successfully ingested and stored.")
 
-    # Storage Visualization
+    # Data Storage Visualization
     st.markdown("## Data Storage")
     st.write("Visualize the stored data (simulated).")
     stored_data = [
@@ -63,7 +140,7 @@ else:
     ]
     st.table(stored_data)
 
-# Footer Section
+# Footer Section with styled text
 st.markdown("<hr>", unsafe_allow_html=True)
-st.markdown("### © 2024 Echomotion GmbH - All Rights Reserved")
-st.markdown("For more information, visit our [website](https://yourwebsite.com) or contact us at info@echomotion.de")
+st.markdown("<div class='footer'>© 2024 Echomotion GmbH - All Rights Reserved</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>For more information, visit our <a href='https://yourwebsite.com'>website</a> or contact us at info@echomotion.de</div>", unsafe_allow_html=True)
