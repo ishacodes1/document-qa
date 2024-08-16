@@ -130,6 +130,35 @@ else:
         st.write("Storing data...")
         st.success("Data has been successfully ingested and stored.")
 
+    # New Section: Lead Qualification and Action Triggering
+    st.markdown("## Lead Qualification")
+    st.write("Review and qualify leads. Once satisfied, you can trigger actions like sending emails or connecting to a CRM.")
+
+    # Input for qualifying leads
+    lead_qualification_prompt = st.text_area("Enter details or criteria to qualify leads:")
+    if st.button("Review and Qualify Leads"):
+        if lead_qualification_prompt:
+            st.write(f"Qualifying leads based on: {lead_qualification_prompt}")
+            # Simulate lead qualification
+            qualified_leads = ["Lead 1: High Potential", "Lead 2: Medium Potential", "Lead 3: Low Potential"]
+            st.markdown(f"<div class='agent-response'><strong>Qualified Leads:</strong><br>{'<br>'.join(qualified_leads)}</div>", unsafe_allow_html=True)
+        else:
+            st.warning("Please enter lead qualification criteria.")
+
+    # Trigger Email and CRM Actions
+    st.markdown("### Trigger Actions for Qualified Leads")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Send Email via Outlook"):
+            st.write("Connecting to Outlook...")
+            st.success("Emails sent successfully!")
+
+    with col2:
+        if st.button("Connect to CRM (HubSpot)"):
+            st.write("Connecting to HubSpot...")
+            st.success("Data ingested into CRM successfully!")
+
     # Data Storage Visualization
     st.markdown("## Data Storage")
     st.write("Visualize the stored data (simulated).")
