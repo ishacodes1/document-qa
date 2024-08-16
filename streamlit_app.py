@@ -68,7 +68,7 @@ else:
 
             try:
                 # Generate AIDELINE's response using OpenAI API with the updated API structure
-                response = openai.ChatCompletion.create(
+                response = openai.Chat.create(
                     model="gpt-3.5-turbo",
                     messages=st.session_state["messages"]
                 )
@@ -80,7 +80,7 @@ else:
                 # Display the updated chat
                 st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {answer}</div>", unsafe_allow_html=True)
 
-            except Exception as e:  # Catching a broader range of exceptions
+            except Exception as e:
                 st.error(f"An error occurred: {e}")
 
 # Footer
