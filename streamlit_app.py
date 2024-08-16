@@ -7,8 +7,8 @@ st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page
 
 # Custom CSS for light theme, modern fonts, and corporate styling
 st.markdown("""
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
         body {
             font-family: 'Inter', sans-serif;
@@ -57,15 +57,17 @@ st.markdown("""
 
         .stMarkdown h1 {
             text-align: center;
-            font-size: 36px;
-            margin-bottom: 10px;
+            font-size: 48px;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
         }
 
-        .stMarkdown h3 {
+        .stMarkdown h2 {
             text-align: center;
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #666666;
+            font-size: 28px;
+            color: #333333;
+            margin-top: -5px;
+            margin-bottom: 15px;
         }
 
         .stMarkdown p {
