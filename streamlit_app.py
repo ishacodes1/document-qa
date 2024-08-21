@@ -139,11 +139,18 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Sidebar for navigation or additional information
+# Initialize session state to track the active tab
+if 'active_tab' not in st.session_state:
+    st.session_state.active_tab = "Email"
+
+# Sidebar for navigation
 st.sidebar.markdown("<h3>Navigation</h3>", unsafe_allow_html=True)
-st.sidebar.markdown("<div class='sidebar-section'>Option 1</div>", unsafe_allow_html=True)
-st.sidebar.markdown("<div class='sidebar-section'>Option 2</div>", unsafe_allow_html=True)
-st.sidebar.markdown("<div class='sidebar-section'>Option 3</div>", unsafe_allow_html=True)
+if st.sidebar.button("Option 1 - Email"):
+    st.session_state.active_tab = "Email"
+if st.sidebar.button("Option 2 - Call Script"):
+    st.session_state.active_tab = "Call Script"
+if st.sidebar.button("Option 3 - Social Media"):
+    st.session_state.active_tab = "Social Media"
 
 # AIDELINE Header and Introduction with modern styling
 st.markdown("<h1>AIDELINE</h1>", unsafe_allow_html=True)
@@ -165,7 +172,9 @@ else:
     st.markdown("<h2 style='text-align: left;'>Personalized Outreach</h2>", unsafe_allow_html=True)
 
     # Create tabs for Email, Call Script, and Social Media
-    tabs = st.tabs(["Email", "Call Script", "Social Media"])
+    tab_names = ["Email", "Call Script", "Social Media"]
+    active_tab_index = tab_names.index(st.session_state.active_tab)
+    tabs = st.tabs(tab_names)
 
     with tabs[0]:
         st.markdown("<div class='tab-content'>Compose your email script here.</div>", unsafe_allow_html=True)
