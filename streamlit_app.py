@@ -1,13 +1,12 @@
-import os
 import streamlit as st
-from openai import OpenAI
+import openai
 
 # Set up the AIDELINE page configuration with a modern UI theme
 st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
 
 # Custom CSS for light theme, modern fonts, and corporate styling
 st.markdown("""
-        <style>
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
         body {
@@ -109,6 +108,14 @@ st.markdown("""
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
+        .tab-content {
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
         .footer {
             text-align: center;
             color: #777777;
@@ -122,15 +129,21 @@ st.markdown("""
             margin-bottom: 30px;
         }
 
-        .intro-text {
-            text-align: left;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333333;
-            margin-bottom: 40px;
+        .sidebar-section {
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #FFFFFF;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
     </style>
     """, unsafe_allow_html=True)
+
+# Sidebar for navigation or additional information
+st.sidebar.markdown("<h3>Navigation</h3>", unsafe_allow_html=True)
+st.sidebar.markdown("<div class='sidebar-section'>Option 1</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div class='sidebar-section'>Option 2</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div class='sidebar-section'>Option 3</div>", unsafe_allow_html=True)
 
 # AIDELINE Header and Introduction with modern styling
 st.markdown("<h1>AIDELINE</h1>", unsafe_allow_html=True)
@@ -148,62 +161,32 @@ openai_api_key = st.text_input("🔑 OpenAI API Key", type="password")
 if not openai_api_key:
     st.info("Please enter your OpenAI API key to continue.", icon="🔑")
 else:
-    # Instantiate the OpenAI client
-    client = OpenAI(api_key=openai_api_key)
+    # Placeholder for OpenAI API interaction
+    st.markdown("<h2 style='text-align: left;'>Personalized Outreach</h2>", unsafe_allow_html=True)
 
-    # Left-aligned sections starting from "Management Agent"
-    st.markdown("<h2 style='text-align: left;'>Management Agent</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: left;'>The Management Agent orchestrates tasks between different agents.</p>", unsafe_allow_html=True)
-    if st.button("Trigger Management Agent"):
-        st.success("Management Agent triggered successfully!")
+    # Create tabs for Email, Call Script, and Social Media
+    tabs = st.tabs(["Email", "Call Script", "Social Media"])
 
-    st.markdown("<h2 style='text-align: left;'>Data Ingestion Agent</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: left;'>The Data Ingestion Agent collects, cleans, and stores data from various sources.</p>", unsafe_allow_html=True)
-    if st.button("Trigger Data Ingestion"):
-        st.write("Data Ingestion Agent triggered!")
-        st.write("Collecting data...")
-        st.write("Cleaning data (removing HTML tags, etc.)...")
-        st.write("Storing data...")
-        st.success("Data has been successfully ingested and stored.")
+    with tabs[0]:
+        st.markdown("<div class='tab-content'>Compose your email script here.</div>", unsafe_allow_html=True)
+        email_input = st.text_area("✉️ Draft your email:")
+        if st.button("Generate Email", key="email_script"):
+            # Placeholder for backend integration
+            st.success("Email script generated successfully!")
 
-    # Chat Interface Section
-    st.markdown("<h2 style='text-align: left;'>Chat with AIDELINE</h2>", unsafe_allow_html=True)
-    st.write("Engage in a conversation with AIDELINE, your AI-powered assistant. You can ask questions, provide prompts, and receive intelligent responses. AIDELINE remembers the context of your previous conversations, allowing for a seamless and continuous dialogue as you interact.")
+    with tabs[1]:
+        st.markdown("<div class='tab-content'>Draft your call script here.</div>", unsafe_allow_html=True)
+        call_input = st.text_area("📞 Draft your call script:")
+        if st.button("Generate Call Script", key="call_script"):
+            # Placeholder for backend integration
+            st.success("Call script generated successfully!")
 
-    # Initialize or retrieve chat history
-    if "messages" not in st.session_state:
-        st.session_state["messages"] = []
-
-    # Display previous chat messages
-    for message in st.session_state["messages"]:
-        if message["role"] == "user":
-            st.markdown(f"<div class='agent-response'><strong>You:</strong> {message['content']}</div>", unsafe_allow_html=True)
-        else:
-            st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {message['content']}</div>", unsafe_allow_html=True)
-
-    # Input for new message
-    user_input = st.text_input("💬 Your message:")
-    if st.button("Send"):
-        if user_input:
-            # Add user message to chat history
-            st.session_state["messages"].append({"role": "user", "content": user_input})
-
-            try:
-                # Generate AIDELINE's response using OpenAI API with the updated API structure
-                response = client.chat.completions.create(
-                    model="gpt-3.5-turbo",
-                    messages=st.session_state["messages"]
-                )
-                answer = response.choices[0].message.content
-
-                # Add AIDELINE's response to chat history
-                st.session_state["messages"].append({"role": "assistant", "content": answer})
-
-                # Display the updated chat
-                st.markdown(f"<div class='agent-response'><strong>AIDELINE:</strong> {answer}</div>", unsafe_allow_html=True)
-
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
+    with tabs[2]:
+        st.markdown("<div class='tab-content'>Create your social media outreach here.</div>", unsafe_allow_html=True)
+        social_input = st.text_area("📱 Draft your social media message:")
+        if st.button("Generate Social Media Message", key="social_media"):
+            # Placeholder for backend integration
+            st.success("Social media message generated successfully!")
 
 # Footer
 st.markdown("<div class='footer'>Powered by OpenAI and Streamlit</div>", unsafe_allow_html=True)
