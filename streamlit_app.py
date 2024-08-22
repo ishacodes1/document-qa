@@ -196,24 +196,27 @@ else:
                 st.markdown(f"**Extracted text from {uploaded_file.name}:**")
                 st.text(pdf_text[:1000])  # Display only the first 1000 characters as an example
 
-    # Create tabs for Email, Call Script, and Social Media
-    tab_names = ["Email", "Call Script", "Social Media"]
-    active_tab_index = tab_names.index(st.session_state.active_tab)
-    tabs = st.tabs(tab_names)
+   # Create tabs for Email, Call Script, and Social Media
+tab_names = ["Email", "Call Script", "Social Media"]
+tabs = st.tabs(tab_names)
 
-    with tabs[0]:
-        st.markdown("<div class='tab-content'>Compose your email script here.</div>", unsafe_allow_html=True)
-        email_input = st.text_area("✉️ Draft your email:")
-        if st.button("Generate Email", key="email_script"):
-            # Placeholder for backend integration
-            st.success("Email script generated successfully!")
+with tabs[0]:
+    st.markdown("<div class='tab-content'>Compose your email script here.</div>", unsafe_allow_html=True)
+    email_input = st.text_area("✉️ Draft your email:")
+    if st.button("Generate Email", key="email_script"):
+        # Placeholder for backend integration
+        st.success("Email script generated successfully!")
 
-    with tabs[1]:
-        st.markdown("<div class='tab-content'>Draft your call script here.</div>", unsafe_allow_html=True)
-        call_input = st.text_area("📞 Draft your call script:")
-        if st.button("Generate Call Script", key="call_script"):
-            # Placeholder for backend integration
-            st.success("Call script generated successfully!")
+with tabs[1]:
+    st.markdown("<div class='tab-content'>Draft your call script here.</div>", unsafe_allow_html=True)
+    call_input = st.text_area("📞 Draft your call script:")
+    if st.button("Generate Call Script", key="call_script"):
+        # Placeholder for backend integration
+        st.success("Call script generated successfully!")
 
-    with tabs[2]:
-        st.markdown("<div class='tab-content'>Create your social media
+with tabs[2]:
+    st.markdown("<div class='tab-content'>Create your social media outreach here.</div>", unsafe_allow_html=True)
+    social_input = st.text_area("📱 Draft your social media message:")
+    if st.button("Generate Social Media Message", key="social_media"):
+        # Placeholder for backend integration
+        st.success("Social media message generated successfully!")
