@@ -1,5 +1,6 @@
 import streamlit as st
 import openai
+from PyPDF2 import PdfReader
 
 # Set up the AIDELINE page configuration with a modern UI theme
 st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
@@ -170,6 +171,22 @@ if not openai_api_key:
 else:
     # Placeholder for OpenAI API interaction
     st.markdown("<h2 style='text-align: left;'>Personalized Outreach</h2>", unsafe_allow_html=True)
+
+    # PDF Upload Section
+    st.markdown("<h3 style='text-align: left;'>Upload Profile PDFs</h3>", unsafe_allow_html=True)
+    uploaded_files = st.file_uploader("Upload PDF files with profile information", type=["pdf"], accept_multiple_files=True)
+
+    if uploaded_files:
+        for uploaded_file in uploaded_files:
+            # Read PDF content (example using PyPDF2)
+            reader = PdfReader(uploaded_file)
+            pdf_text = ""
+            for page in reader.pages:
+                pdf_text += page.extract_text()
+
+            # Display extracted text (or use it for message personalization)
+            st.markdown(f"**Extracted text from {uploaded_file.name}:**")
+            st.text(pdf_text[:1000])  # Display only the first 1000 characters as an example
 
     # Create tabs for Email, Call Script, and Social Media
     tab_names = ["Email", "Call Script", "Social Media"]
