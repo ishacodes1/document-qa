@@ -152,4 +152,68 @@ if 'active_tab' not in st.session_state:
 # Sidebar for navigation
 st.sidebar.markdown("<h3>Navigation</h3>", unsafe_allow_html=True)
 if st.sidebar.button("Option 1 - Email"):
-    st.session_state.active_tab​⬤
+    st.session_state.active_tab = "Email"
+if st.sidebar.button("Option 2 - Call Script"):
+    st.session_state.active_tab = "Call Script"
+if st.sidebar.button("Option 3 - Social Media"):
+    st.session_state.active_tab = "Social Media"
+
+# AIDELINE Header and Introduction with modern styling
+st.markdown("<h1>AIDELINE</h1>", unsafe_allow_html=True)
+st.markdown("<h3>Your AI-Powered Business Development Representative</h3>", unsafe_allow_html=True)
+st.markdown("""
+    <p>Welcome to AIDELINE, where cutting-edge AI technology meets the art of business development. Our AI-powered BDR assistant
+    is designed to streamline your sales process, from lead research to personalized outreach. Enhance your team's productivity and
+    watch your conversions soar with AIDELINE's intelligent tools.</p>
+    """, unsafe_allow_html=True)
+
+# OpenAI API Key input with styled input
+st.markdown("### Enter your OpenAI API Key to Get Started:")
+openai_api_key = st.text_input("🔑 OpenAI API Key", type="password")
+
+if not openai_api_key:
+    st.info("Please enter your OpenAI API key to continue.", icon="🔑")
+else:
+    # Placeholder for OpenAI API interaction
+    st.markdown("<h2 style='text-align: left;'>Personalized Outreach</h2>", unsafe_allow_html=True)
+
+    if not PDF_READER_AVAILABLE:
+        st.warning("PDF processing is not available because the PyPDF2 library is not installed.")
+    else:
+        # PDF Upload Section
+        st.markdown("<h3 style='text-align: left;'>Upload Profile PDFs</h3>", unsafe_allow_html=True)
+        uploaded_files = st.file_uploader("Upload PDF files with profile information", type=["pdf"], accept_multiple_files=True)
+
+        if uploaded_files:
+            for uploaded_file in uploaded_files:
+                # Read PDF content (example using PyPDF2)
+                reader = PdfReader(uploaded_file)
+                pdf_text = ""
+                for page in reader.pages:
+                    pdf_text += page.extract_text()
+
+                # Display extracted text (or use it for message personalization)
+                st.markdown(f"**Extracted text from {uploaded_file.name}:**")
+                st.text(pdf_text[:1000])  # Display only the first 1000 characters as an example
+
+    # Create tabs for Email, Call Script, and Social Media
+    tab_names = ["Email", "Call Script", "Social Media"]
+    active_tab_index = tab_names.index(st.session_state.active_tab)
+    tabs = st.tabs(tab_names)
+
+    with tabs[0]:
+        st.markdown("<div class='tab-content'>Compose your email script here.</div>", unsafe_allow_html=True)
+        email_input = st.text_area("✉️ Draft your email:")
+        if st.button("Generate Email", key="email_script"):
+            # Placeholder for backend integration
+            st.success("Email script generated successfully!")
+
+    with tabs[1]:
+        st.markdown("<div class='tab-content'>Draft your call script here.</div>", unsafe_allow_html=True)
+        call_input = st.text_area("📞 Draft your call script:")
+        if st.button("Generate Call Script", key="call_script"):
+            # Placeholder for backend integration
+            st.success("Call script generated successfully!")
+
+    with tabs[2]:
+        st.markdown("<div class='tab-content'>Create your social media
