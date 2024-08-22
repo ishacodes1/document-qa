@@ -200,4 +200,4 @@ else:
             st.success("Email script generated successfully!")
 
     with tabs[1]:
-        st.markdown("<div class='tab-content'>Draft your call script here.</div>", unsafe_allow_html=True
+        st.markdown("<div class='tab-content'>Draft your call script here.</div>", unsafe_allow_html=True)
