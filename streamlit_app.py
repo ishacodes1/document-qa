@@ -1,6 +1,5 @@
 import streamlit as st
 import openai
-from PyPDF2 import PdfReader
 
 # Set up the AIDELINE page configuration with a modern UI theme
 st.set_page_config(page_title="AIDELINE - AI BDR Assistant", layout="wide", page_icon="🤖")
@@ -136,23 +135,22 @@ st.markdown("""
             background-color: #FFFFFF;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
-            cursor: pointer;
         }
     </style>
     """, unsafe_allow_html=True)
 
-# Function to scroll to specific section
-def scroll_to_section(section):
-    st.session_state.scroll_target = section
+# Initialize session state to track the active tab
+if 'active_tab' not in st.session_state:
+    st.session_state.active_tab = "Email"
 
 # Sidebar for navigation
 st.sidebar.markdown("<h3>Navigation</h3>", unsafe_allow_html=True)
 if st.sidebar.button("Option 1 - Email"):
-    scroll_to_section("email")
+    st.session_state.active_tab = "Email"
 if st.sidebar.button("Option 2 - Call Script"):
-    scroll_to_section("call_script")
+    st.session_state.active_tab = "Call Script"
 if st.sidebar.button("Option 3 - Social Media"):
-    scroll_to_section("social_media")
+    st.session_state.active_tab = "Social Media"
 
 # AIDELINE Header and Introduction with modern styling
 st.markdown("<h1>AIDELINE</h1>", unsafe_allow_html=True)
@@ -163,54 +161,41 @@ st.markdown("""
     watch your conversions soar with AIDELINE's intelligent tools.</p>
     """, unsafe_allow_html=True)
 
-# Placeholder for OpenAI API interaction
-st.markdown("<h2 style='text-align: left;'>Personalized Outreach</h2>", unsafe_allow_html=True)
+# OpenAI API Key input with styled input
+st.markdown("### Enter your OpenAI API Key to Get Started:")
+openai_api_key = st.text_input("🔑 OpenAI API Key", type="password")
 
-# PDF Upload Section
-st.markdown("<h3 style='text-align: left;'>Upload Profile PDFs</h3>", unsafe_allow_html=True)
-uploaded_files = st.file_uploader("Upload PDF files with profile information", type=["pdf"], accept_multiple_files=True)
+if not openai_api_key:
+    st.info("Please enter your OpenAI API key to continue.", icon="🔑")
+else:
+    # Placeholder for OpenAI API interaction
+    st.markdown("<h2 style='text-align: left;'>Personalized Outreach</h2>", unsafe_allow_html=True)
 
-if uploaded_files:
-    for uploaded_file in uploaded_files:
-        # Read PDF content (example using PyPDF2)
-        reader = PdfReader(uploaded_file)
-        pdf_text = ""
-        for page in reader.pages:
-            pdf_text += page.extract_text()
+    # Create tabs for Email, Call Script, and Social Media
+    tab_names = ["Email", "Call Script", "Social Media"]
+    active_tab_index = tab_names.index(st.session_state.active_tab)
+    tabs = st.tabs(tab_names)
 
-        # Display extracted text (or use it for message personalization)
-        st.markdown(f"**Extracted text from {uploaded_file.name}:**")
-        st.text(pdf_text[:1000])  # Display only the first 1000 characters as an example
+    with tabs[0]:
+        st.markdown("<div class='tab-content'>Compose your email script here.</div>", unsafe_allow_html=True)
+        email_input = st.text_area("✉️ Draft your email:")
+        if st.button("Generate Email", key="email_script"):
+            # Placeholder for backend integration
+            st.success("Email script generated successfully!")
 
-# Email Section
-st.markdown("<div id='email'></div>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: left;'>Compose your email script here.</h3>", unsafe_allow_html=True)
-email_input = st.text_area("✉️ Draft your email:")
-if st.button("Generate Email", key="email_script"):
-    # Placeholder for backend integration
-    st.success("Email script generated successfully!")
+    with tabs[1]:
+        st.markdown("<div class='tab-content'>Draft your call script here.</div>", unsafe_allow_html=True)
+        call_input = st.text_area("📞 Draft your call script:")
+        if st.button("Generate Call Script", key="call_script"):
+            # Placeholder for backend integration
+            st.success("Call script generated successfully!")
 
-# Call Script Section
-st.markdown("<div id='call_script'></div>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: left;'>Draft your call script here.</h3>", unsafe_allow_html=True)
-call_input = st.text_area("📞 Draft your call script:")
-if st.button("Generate Call Script", key="call_script"):
-    # Placeholder for backend integration
-    st.success("Call script generated successfully!")
-
-# Social Media Section
-st.markdown("<div id='social_media'></div>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: left;'>Create your social media outreach here.</h3>", unsafe_allow_html=True)
-social_input = st.text_area("📱 Draft your social media message:")
-if st.button("Generate Social Media Message", key="social_media"):
-    # Placeholder for backend integration
-    st.success("Social media message generated successfully!")
+    with tabs[2]:
+        st.markdown("<div class='tab-content'>Create your social media outreach here.</div>", unsafe_allow_html=True)
+        social_input = st.text_area("📱 Draft your social media message:")
+        if st.button("Generate Social Media Message", key="social_media"):
+            # Placeholder for backend integration
+            st.success("Social media message generated successfully!")
 
 # Footer
 st.markdown("<div class='footer'>Powered by OpenAI and Streamlit</div>", unsafe_allow_html=True)
-
-# Scroll to the target section if set
-if 'scroll_target' in st.session_state:
-    scroll_target = st.session_state.scroll_target
-    st.write(f"<script>window.location.href = '#{scroll_target}';</script>", unsafe_allow_html=True)
-    del st.session_state.scroll_target
